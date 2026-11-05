@@ -1,0 +1,23 @@
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q --tb=short"
+filterwarnings = [
+  "ignore:'.*_ctx_stack' is deprecated:DeprecationWarning",
+  "ignore:The '__version__' attribute is deprecated:DeprecationWarning",
+  "ignore::sqlalchemy.exc.MovedIn20Warning",
+]
+markers = [
+  "postgres: integration test against POSTGRES_TEST_URL",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = [".airflow", "logs", "data"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pipeline"]
