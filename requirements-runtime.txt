@@ -1,0 +1,2 @@
+# Extra packages for the Airflow image. apache-airflow and psycopg2 are already there.
+duckdb==1.1.3

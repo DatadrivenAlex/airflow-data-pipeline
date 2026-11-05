@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.airflow/
+logs/*
+!logs/.gitkeep
+data/warehouse/*
+!data/warehouse/.gitkeep
+data/extracts/*
+!data/extracts/.gitkeep
+.env
+*.duckdb
+*.duckdb.wal
+.DS_Store

@@ -1,0 +1,70 @@
+version: 1
+checks:
+  - id: staging_min_rows
+    type: min_rows
+    table: staging.stg_earthquakes
+    min_rows: 1
+
+  - id: staging_event_id_not_null
+    type: not_null
+    table: staging.stg_earthquakes
+    column: event_id
+
+  - id: staging_event_time_not_null
+    type: not_null
+    table: staging.stg_earthquakes
+    column: event_time
+
+  - id: staging_latitude_not_null
+    type: not_null
+    table: staging.stg_earthquakes
+    column: latitude
+
+  - id: staging_longitude_not_null
+    type: not_null
+    table: staging.stg_earthquakes
+    column: longitude
+
+  - id: staging_magnitude_not_null
+    type: not_null
+    table: staging.stg_earthquakes
+    column: magnitude
+
+  - id: staging_event_id_unique
+    type: unique
+    table: staging.stg_earthquakes
+    column: event_id
+
+  - id: daily_event_date_unique
+    type: unique
+    table: marts.mart_daily_seismicity
+    column: event_date
+
+  - id: region_name_unique
+    type: unique
+    table: marts.mart_region_summary
+    column: region
+
+  - id: staging_freshness
+    type: freshness
+    table: staging.stg_earthquakes
+    column: extracted_at
+    max_lag_hours: 36
+
+  - id: daily_mart_reconciles
+    type: sum_equals_count
+    sum_table: marts.mart_daily_seismicity
+    sum_column: event_count
+    count_table: staging.stg_earthquakes
+
+  - id: region_mart_reconciles
+    type: sum_equals_count
+    sum_table: marts.mart_region_summary
+    sum_column: event_count
+    count_table: staging.stg_earthquakes
+
+  - id: significant_mart_reconciles
+    type: count_equals_filter
+    table: marts.mart_significant_events
+    filter_table: staging.stg_earthquakes
+    where: magnitude >= 5
